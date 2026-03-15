@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- PRIMARY SEO TAGS -->
     <title>NU CGPA Calculator - Calculate National University GPA from PDF</title>
-    <meta name="description" content="Calculate your National University (NU) Bangladesh CGPA automatically from PDF result sheets. Fast, accurate, and free GPA calculator for Honours, Degree, and Masters students.">
-    <meta name="keywords" content="NU CGPA Calculator, National University Bangladesh, NU Result to GPA, Calculate NU CGPA, Honours Result Calculator, NU PDF Result, Rony Hassan Revan">
+    <meta name="description"
+        content="Calculate your National University (NU) Bangladesh CGPA automatically from PDF result sheets. Fast, accurate, and free GPA calculator for Honours, Degree, and Masters students.">
+    <meta name="keywords"
+        content="NU CGPA Calculator, National University Bangladesh, NU Result to GPA, Calculate NU CGPA, Honours Result Calculator, NU PDF Result, Rony Hassan Revan">
     <meta name="author" content="Rony Hassan Revan">
 
     <!-- OPEN GRAPH (Social Media Sharing) -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="NU CGPA Calculator - Fast & Accurate">
-    <meta property="og:description" content="Upload your NU Result PDF and get your CGPA instantly. Developed by Rony Hassan Revan.">
-    <meta property="og:image" content="https://yourdomain.com/logo.png"> <!-- Replace with your actual logo link later -->
+    <meta property="og:description"
+        content="Upload your NU Result PDF and get your CGPA instantly. Developed by Rony Hassan Revan.">
+    <meta property="og:image" content="https://yourdomain.com/logo.png">
+    <!-- Replace with your actual logo link later -->
     <meta property="og:url" content="https://your-render-link.onrender.com">
 
     <!-- FAVICON -->
@@ -22,12 +27,22 @@
 
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
-        .gradient-text { background: linear-gradient(to right, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-pattern { background-color: #f8fafc; background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px); background-size: 10px 10px; }
+        .gradient-text {
+            background: linear-gradient(to right, #1e40af, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-pattern {
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
+            background-size: 10px 10px;
+        }
     </style>
 </head>
+
 <body class="hero-pattern min-h-screen flex flex-col font-sans">
 
     <!-- HEADER / NAVBAR -->
@@ -49,23 +64,27 @@
     </header>
 
     <main class="container mx-auto max-w-4xl px-4 py-12 flex-grow">
-        
+
         <!-- CALCULATION BOX -->
         <section id="upload-box" class="bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100">
             <header class="mb-8">
-                <h2 class="text-4xl font-extrabold text-gray-900 leading-tight">NU CGPA Calculator <br><span class="text-blue-600">From PDF Result</span></h2>
-                <p class="text-gray-500 mt-4 text-lg">Calculate your National University Honours, Degree, or Masters CGPA instantly by uploading your result sheet.</p>
+                <h2 class="text-4xl font-extrabold text-gray-900 leading-tight">NU CGPA Calculator <br><span
+                        class="text-blue-600">From PDF Result</span></h2>
+                <p class="text-gray-500 mt-4 text-lg">Calculate your National University Honours, Degree, or Masters
+                    CGPA instantly by uploading your result sheet.</p>
             </header>
 
             <div class="py-6">
                 <input type="file" id="fileInput" class="hidden" accept=".pdf">
-                <label for="fileInput" class="inline-flex items-center bg-blue-600 text-white px-12 py-5 rounded-2xl font-black cursor-pointer hover:bg-blue-700 hover:shadow-2xl transition-all active:scale-95 text-lg">
+                <label for="fileInput"
+                    class="inline-flex items-center bg-blue-600 text-white px-12 py-5 rounded-2xl font-black cursor-pointer hover:bg-blue-700 hover:shadow-2xl transition-all active:scale-95 text-lg">
                     <i class="fas fa-file-pdf mr-3 text-2xl"></i> SELECT RESULT PDF
                 </label>
                 <p id="fileName" class="mt-4 text-blue-600 font-bold animate-pulse"></p>
             </div>
 
-            <button onclick="processPDF()" id="calcBtn" class="hidden w-full mt-4 bg-emerald-500 text-white py-5 rounded-2xl font-black text-xl hover:bg-emerald-600 shadow-xl transition-all">
+            <button onclick="processPDF()" id="calcBtn"
+                class="hidden w-full mt-4 bg-emerald-500 text-white py-5 rounded-2xl font-black text-xl hover:bg-emerald-600 shadow-xl transition-all">
                 GENERATE CGPA REPORT
             </button>
         </section>
@@ -80,11 +99,14 @@
         <!-- RESULTS DASHBOARD -->
         <article id="results" class="hidden space-y-6 mt-10">
             <div class="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-100">
-                <div class="bg-gradient-to-r from-blue-700 to-blue-500 p-8 text-white flex flex-col md:flex-row justify-between items-center">
+                <div
+                    class="bg-gradient-to-r from-blue-700 to-blue-500 p-8 text-white flex flex-col md:flex-row justify-between items-center">
                     <div>
-                        <p class="text-blue-100 text-xs font-bold uppercase tracking-widest mb-1">Official Result For</p>
+                        <p class="text-blue-100 text-xs font-bold uppercase tracking-widest mb-1">Official Result For
+                        </p>
                         <h2 id="stName" class="text-3xl font-black"></h2>
-                        <p id="stReg" class="mt-2 text-blue-100 font-mono bg-white/20 px-4 py-1 rounded-full inline-block"></p>
+                        <p id="stReg"
+                            class="mt-2 text-blue-100 font-mono bg-white/20 px-4 py-1 rounded-full inline-block"></p>
                     </div>
                     <div class="bg-white p-6 rounded-2xl text-center shadow-inner mt-6 md:mt-0">
                         <p class="text-xs font-bold uppercase text-gray-400 mb-1">Your Year GPA</p>
@@ -95,7 +117,8 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="bg-gray-50 text-gray-400 text-[11px] font-black uppercase tracking-widest border-b">
+                            <tr
+                                class="bg-gray-50 text-gray-400 text-[11px] font-black uppercase tracking-widest border-b">
                                 <th class="px-8 py-4">Course Code</th>
                                 <th class="px-8 py-4">Course Title</th>
                                 <th class="px-8 py-4 text-center">Credit</th>
@@ -109,10 +132,12 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <a id="downloadBtn" href="#" class="bg-rose-600 text-white p-5 rounded-2xl text-center font-black text-xl hover:bg-rose-700 transition shadow-lg flex items-center justify-center">
+                <a id="downloadBtn" href="#"
+                    class="bg-rose-600 text-white p-5 rounded-2xl text-center font-black text-xl hover:bg-rose-700 transition shadow-lg flex items-center justify-center">
                     <i class="fas fa-download mr-3"></i> DOWNLOAD REPORT PDF
                 </a>
-                <button onclick="location.reload()" class="bg-gray-800 text-white p-5 rounded-2xl font-black text-xl hover:bg-gray-900 transition shadow-lg">
+                <button onclick="location.reload()"
+                    class="bg-gray-800 text-white p-5 rounded-2xl font-black text-xl hover:bg-gray-900 transition shadow-lg">
                     CALCULATE AGAIN
                 </button>
             </div>
@@ -121,9 +146,11 @@
         <!-- SEO CONTENT SECTION (Helpful for Google Ranking) -->
         <section id="how-to" class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-10">
             <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-info-circle text-blue-600 mr-2"></i> How to calculate NU CGPA?</h3>
+                <h3 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                    How to calculate NU CGPA?</h3>
                 <p class="text-gray-600 text-sm leading-relaxed">
-                    Calculating your National University (NU) CGPA manually is difficult. Our tool automates the process:
+                    Calculating your National University (NU) CGPA manually is difficult. Our tool automates the
+                    process:
                     <br><br>
                     1. Download your result PDF from the official NU result website.<br>
                     2. Upload the file here.<br>
@@ -132,14 +159,33 @@
                 </p>
             </div>
             <div id="grading" class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <h3 class="text-xl font-bold mb-4 text-gray-800"><i class="fas fa-table text-blue-600 mr-2"></i> NU Grading Scale</h3>
+                <h3 class="text-xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-table text-blue-600 mr-2"></i> NU Grading Scale
+                </h3>
+
                 <div class="grid grid-cols-2 gap-2 text-xs text-gray-500">
                     <p>80% - 100%: <b>A+ (4.00)</b></p>
                     <p>75% - 79%: <b>A (3.75)</b></p>
                     <p>70% - 74%: <b>A- (3.50)</b></p>
                     <p>65% - 69%: <b>B+ (3.25)</b></p>
                     <p>60% - 64%: <b>B (3.00)</b></p>
+                    <p>55% - 59%: <b>B- (2.75)</b></p>
+                    <p>50% - 54%: <b>C+ (2.50)</b></p>
+                    <p>45% - 49%: <b>C (2.25)</b></p>
+                    <p>40% - 44%: <b>D (2.00)</b></p>
                     <p>00% - 39%: <b>F (0.00)</b></p>
+                </div>
+
+                <!-- Division System -->
+                <h4 class="text-lg font-semibold mt-6 mb-3 text-gray-700">
+                    <i class="fas fa-award text-green-600 mr-2"></i> Division System
+                </h4>
+
+                <div class="grid grid-cols-2 gap-2 text-xs text-gray-500">
+                    <p>60% and above: <b>1st Division</b></p>
+                    <p>50% - 59%: <b>2nd Division</b></p>
+                    <p>40% - 49%: <b>3rd Division</b></p>
+                    <p>Below 40%: <b>Fail</b></p>
                 </div>
             </div>
         </section>
@@ -148,16 +194,25 @@
     <!-- FOOTER -->
     <footer class="bg-white border-t border-gray-200 py-12 mt-20">
         <div class="container mx-auto px-4 text-center">
-            <p class="text-gray-500 font-medium">Proudly Developed by <span class="text-blue-600 font-black">Rony Hassan Revan</span></p>
-            
+            <p class="text-gray-500 font-medium">Proudly Developed by <span class="text-blue-600 font-black">Rony Hassan
+                    Revan</span></p>
+
             <div class="flex justify-center space-x-8 mt-6">
-                <a href="https://facebook.com/ronyhassanrevan.1" target="_blank" class="text-gray-400 hover:text-blue-600 transition-all text-2xl"><i class="fab fa-facebook"></i></a>
-                <a href="https://instagram.com/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-pink-600 transition-all text-2xl"><i class="fab fa-instagram"></i></a>
-                <a href="https://github.com/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-black transition-all text-2xl"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-blue-700 transition-all text-2xl"><i class="fab fa-linkedin"></i></a>
+                <a href="https://facebook.com/ronyhassanrevan.1" target="_blank"
+                    class="text-gray-400 hover:text-blue-600 transition-all text-2xl"><i
+                        class="fab fa-facebook"></i></a>
+                <a href="https://instagram.com/ronyhassanrevan" target="_blank"
+                    class="text-gray-400 hover:text-pink-600 transition-all text-2xl"><i
+                        class="fab fa-instagram"></i></a>
+                <a href="https://github.com/ronyhassanrevan" target="_blank"
+                    class="text-gray-400 hover:text-black transition-all text-2xl"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/ronyhassanrevan" target="_blank"
+                    class="text-gray-400 hover:text-blue-700 transition-all text-2xl"><i
+                        class="fab fa-linkedin"></i></a>
             </div>
-            
-            <div class="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest">
+
+            <div
+                class="mt-8 pt-8 border-t border-gray-100 flex flex-col md:flex-row justify-between items-center text-[10px] text-gray-400 uppercase tracking-widest">
                 <p>© 2024 NU CGPA MASTER | ACCURATE ACADEMIC CALCULATOR</p>
                 <div class="space-x-4 mt-4 md:mt-0">
                     <a href="#" class="hover:text-blue-600">Privacy Policy</a>
@@ -170,7 +225,7 @@
     <script>
         const fileInput = document.getElementById('fileInput');
         fileInput.onchange = () => {
-            if(fileInput.files[0]) {
+            if (fileInput.files[0]) {
                 document.getElementById('fileName').innerText = "✔ " + fileInput.files[0].name;
                 document.getElementById('calcBtn').classList.remove('hidden');
             }
@@ -216,4 +271,5 @@
         }
     </script>
 </body>
+
 </html>
