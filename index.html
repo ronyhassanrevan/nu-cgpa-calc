@@ -10,7 +10,7 @@
         .gradient-text { background: linear-gradient(to right, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="bg-slate-50 min-h-screen flex flex-col">
 
     <nav class="bg-white border-b border-gray-200 p-4 sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
@@ -23,15 +23,7 @@
         </div>
     </nav>
 
-    <!-- Ad Space Top -->
-    <div class="w-full text-center py-4 bg-gray-100 border-b border-gray-200 mb-6">
-        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Sponsored Advertisement</p>
-        <div class="mx-auto w-[728px] h-[90px] bg-gray-200 hidden md:flex items-center justify-center text-gray-400 rounded">
-            Google AdSense Placeholder (Banner)
-        </div>
-    </div>
-
-    <main class="container mx-auto max-w-4xl px-4 pb-20">
+    <main class="container mx-auto max-w-4xl px-4 py-10 flex-grow">
         <!-- Input Section -->
         <div id="upload-box" class="bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100 transition-all">
             <div class="mb-6">
@@ -101,6 +93,30 @@
             </div>
         </div>
     </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 mt-10">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-gray-600 font-medium">Developed with <i class="fas fa-heart text-red-500"></i> by <span class="text-blue-600 font-bold">Rony Hassan Revan</span></p>
+            
+            <div class="flex justify-center space-x-6 mt-4">
+                <a href="https://facebook.com/ronyhassanrevan.1" target="_blank" class="text-gray-400 hover:text-blue-600 transition-colors text-xl">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://instagram.com/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-pink-600 transition-colors text-xl">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://github.com/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-black transition-colors text-xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/ronyhassanrevan" target="_blank" class="text-gray-400 hover:text-blue-700 transition-colors text-xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+            </div>
+            
+            <p class="text-gray-400 text-xs mt-6 uppercase tracking-widest">© 2024 NU CGPA MASTER | All Rights Reserved</p>
+        </div>
+    </footer>
 
     <script>
         const fileInput = document.getElementById('fileInput');
