@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NU CGPA Calculator Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-text { background: linear-gradient(to right, #1e40af, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <nav class="bg-white border-b border-gray-200 p-4 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black gradient-text tracking-tighter"><i class="fas fa-certificate mr-2"></i>NU CGPA MASTER</h1>
+            <div class="hidden md:flex space-x-6 text-sm font-bold text-gray-600">
+                <a href="#" class="hover:text-blue-600">HOME</a>
+                <a href="#" class="hover:text-blue-600">ABOUT</a>
+                <a href="#" class="hover:text-blue-600">CONTACT</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Ad Space Top -->
+    <div class="w-full text-center py-4 bg-gray-100 border-b border-gray-200 mb-6">
+        <p class="text-[10px] text-gray-400 uppercase tracking-widest mb-1">Sponsored Advertisement</p>
+        <div class="mx-auto w-[728px] h-[90px] bg-gray-200 hidden md:flex items-center justify-center text-gray-400 rounded">
+            Google AdSense Placeholder (Banner)
+        </div>
+    </div>
+
+    <main class="container mx-auto max-w-4xl px-4 pb-20">
+        <!-- Input Section -->
+        <div id="upload-box" class="bg-white rounded-3xl shadow-2xl p-10 text-center border border-gray-100 transition-all">
+            <div class="mb-6">
+                <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4 text-3xl">
+                    <i class="fas fa-file-pdf"></i>
+                </div>
+                <h2 class="text-3xl font-extrabold text-gray-800">Calculate Your CGPA</h2>
+                <p class="text-gray-500 mt-2">Upload any Year-wise or Consolidated PDF result sheet</p>
+            </div>
+
+            <input type="file" id="fileInput" class="hidden" accept=".pdf">
+            <label for="fileInput" class="inline-flex items-center bg-blue-600 text-white px-10 py-4 rounded-2xl font-bold cursor-pointer hover:bg-blue-700 hover:shadow-xl transition-all active:scale-95">
+                <i class="fas fa-cloud-upload-alt mr-3"></i> CHOOSE RESULT PDF
+            </label>
+            <p id="fileName" class="mt-4 text-blue-600 font-semibold italic"></p>
+
+            <button onclick="processPDF()" id="calcBtn" class="hidden w-full mt-8 bg-emerald-500 text-white py-5 rounded-2xl font-black text-xl hover:bg-emerald-600 shadow-lg transition-all animate-bounce">
+                START CALCULATION
+            </button>
+        </div>
+
+        <!-- Processing State -->
+        <div id="loader" class="hidden my-20 text-center">
+            <div class="inline-block animate-spin text-blue-600 text-6xl mb-4"><i class="fas fa-circle-notch"></i></div>
+            <h3 class="text-xl font-bold text-gray-700">Analyzing PDF Layout...</h3>
+            <p class="text-gray-400">Extracting course codes and calculating points.</p>
+        </div>
+
+        <!-- Result Dashboard -->
+        <div id="results" class="hidden space-y-6 mt-10">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
+                <div class="bg-blue-600 p-8 text-white flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div>
+                        <p class="text-blue-100 text-xs font-bold uppercase tracking-widest">Student Information</p>
+                        <h2 id="stName" class="text-3xl font-black mb-1"></h2>
+                        <p id="stReg" class="text-blue-100 font-mono text-sm bg-blue-700/50 px-3 py-1 rounded-full inline-block"></p>
+                    </div>
+                    <div class="bg-white/10 p-4 rounded-2xl text-center min-w-[150px] backdrop-blur-md border border-white/20">
+                        <p class="text-xs font-bold uppercase text-blue-100 mb-1">Calculated GPA</p>
+                        <p id="stGPA" class="text-5xl font-black"></p>
+                    </div>
+                </div>
+
+                <div class="p-0 overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 text-[10px] font-black uppercase tracking-widest border-b border-slate-100">
+                                <th class="px-6 py-4">Code</th>
+                                <th class="px-6 py-4">Course Title</th>
+                                <th class="px-6 py-4 text-center">Credit</th>
+                                <th class="px-6 py-4 text-center">Grade</th>
+                                <th class="px-6 py-4 text-center">Point</th>
+                            </tr>
+                        </thead>
+                        <tbody id="courseRows" class="text-sm font-medium text-slate-700 divide-y divide-slate-50"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <a id="downloadBtn" href="#" class="bg-rose-600 text-white p-5 rounded-2xl text-center font-black text-xl hover:bg-rose-700 transition shadow-lg flex items-center justify-center">
+                    <i class="fas fa-file-pdf mr-3"></i> DOWNLOAD PDF REPORT
+                </a>
+                <button onclick="location.reload()" class="bg-slate-800 text-white p-5 rounded-2xl font-black text-xl hover:bg-slate-900 transition">
+                    NEW CALCULATION
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        fileInput.onchange = () => {
+            document.getElementById('fileName').innerText = "Target File: " + fileInput.files[0].name;
+            document.getElementById('calcBtn').classList.remove('hidden');
+        };
+
+        async function processPDF() {
+            const file = fileInput.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            document.getElementById('upload-box').classList.add('hidden');
+            document.getElementById('loader').classList.remove('hidden');
+
+            try {
+                const response = await fetch('/process', { method: 'POST', body: formData });
+                const result = await response.json();
+
+                if (response.ok) {
+                    renderResults(result);
+                } else {
+                    alert(result.message || "Failed to process PDF.");
+                    location.reload();
+                }
+            } catch (e) {
+                alert("Network error. Check if backend is running.");
+                location.reload();
+            }
+        }
+
+        function renderResults(data) {
+            document.getElementById('loader').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+
+            document.getElementById('stName').innerText = data.student.name;
+            document.getElementById('stReg').innerText = "Reg: " + data.student.reg;
+            document.getElementById('stGPA').innerText = data.gpa.toFixed(2);
+            document.getElementById('downloadBtn').href = data.download_url;
+
+            const rows = data.courses.map(c => `
+                <tr class="hover:bg-slate-50/80 transition-all">
+                    <td class="px-6 py-4 font-black text-blue-600">${c.code}</td>
+                    <td class="px-6 py-4 text-slate-500 font-normal">${c.title}</td>
+                    <td class="px-6 py-4 text-center font-bold">${c.credit}</td>
+                    <td class="px-6 py-4 text-center">
+                        <span class="px-3 py-1 rounded-lg text-[10px] font-black ${c.grade === 'F' ? 'bg-rose-100 text-rose-600' : 'bg-emerald-100 text-emerald-700'}">${c.grade}</span>
+                    </td>
+                    <td class="px-6 py-4 text-center font-black bg-blue-50/30 text-blue-700">${c.gp.toFixed(2)}</td>
+                </tr>
+            `).join('');
+            document.getElementById('courseRows').innerHTML = rows;
+        }
+    </script>
+</body>
+</html>
